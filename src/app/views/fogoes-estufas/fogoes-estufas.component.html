@@ -1,0 +1,44 @@
+<mat-sidenav-container>
+    <mat-sidenav mode="side" opened fixedInViewport="false"
+    fixedTopGap="50" fixedBottomGap="64">
+      <mat-nav-list>
+        <div class="Filtro">
+            <h2>Produtos</h2>
+            <div>
+                <input type="checkbox" id="FogoesEstufas" name="FogoesEstufas" onchange="filtroProdutos()">
+                <label for="FogoesEstufas">Fogões e estufas</label>
+            </div><br>
+            <div>
+                <input type="checkbox" id="Chapas" name="Chapas" onchange="filtroProdutos()">
+                <label for="Chapas">Chapas</label>
+            </div><br>
+            <div>
+                <input type="checkbox" id="Fornos" name="Fornos" onchange="filtroProdutos()">
+                <label for="Fornos">Fornos</label>
+            </div>
+            <br><button mat-raised-button onclick="testeBotao()">Filtrar</button>
+        </div>
+
+      </mat-nav-list>
+    </mat-sidenav>
+    
+    <mat-grid-list cols="3" rowHeight="270px">
+        <mat-grid-tile  *ngFor="let produto of getProdutos()">
+            <div >
+                <div class = "imagem">
+                    <img src={{produto.img}} width="150" height="150"><br>
+                </div>
+                <div class="conteudo-produto">
+                    <h3 >{{produto.nome}} <br>
+                    <b>{{produto.valor | currency: "BRL" }}</b>
+                    </h3>
+                    
+                
+                </div>
+            </div>
+
+        </mat-grid-tile>
+</mat-grid-list>
+
+
+</mat-sidenav-container>

@@ -1,0 +1,23 @@
+.footer-copyright{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: black;
+}
+mat-grid-list{
+    color: #9d9daf;
+    background-image: linear-gradient(to bottom right,#17171c, #505062);
+}
+.footer-copyright{
+    background-image: linear-gradient(to bottom right,#505062, #393946);
+}
+.social{
+    display: flex;
+    align-items: center;
+    justify-content: center;    
+}
+
+
+
+
+

@@ -1,0 +1,29 @@
+
+.conteudo-produto{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    
+}
+.imagem{
+    text-align: center;
+}  
+
+mat-sidenav-container{
+    background-color: white;
+    color: #505050;
+    padding-left: 20%;
+    padding-right: 20%;
+    
+}
+label, mat-sidenav{
+    padding-top: 5%;
+    color: #505050;
+    background-color: white;
+}
+button{
+    background-image: linear-gradient(to bottom right,#17171c, #6a6a70);
+}
+
+
+

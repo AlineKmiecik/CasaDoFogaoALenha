@@ -1,0 +1,25 @@
+
+<mat-toolbar  class="header" >
+    <mat-list role="list">
+        <mat-list-item role="listitem"> <a mat-button href="/" > <img src="http://localhost:8080/logo.png" width="80" height="80" > </a> </mat-list-item>
+
+        <mat-list-item role="listitem">
+             
+            <button mat-button [matMenuTriggerFor]="testMenu" (mouseover)= "menuTrigger.openMenu()" #menuTrigger="matMenuTrigger" class="toolbar" >Produtos</button>
+              <mat-menu #testMenu="matMenu">
+                <span (mouseleave)= "menuTrigger.closeMenu()">
+                    <button mat-menu-item><a class="menu" href="/produtos" > Fogões e estufas</a></button>
+                    <button mat-menu-item><a class="menu" href="/produtos" > Acessorios</a></button>
+                    <button mat-menu-item><a class="menu" href="/produtos" > Chapas</a></button>
+                </span>
+              </mat-menu>   
+        </mat-list-item>
+        <mat-list-item role="listitem"> <a class="toolbar" mat-button href="/contato" >Contato</a> </mat-list-item>
+        
+    </mat-list>
+</mat-toolbar>
+
+
+
+
+
