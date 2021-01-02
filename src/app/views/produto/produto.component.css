@@ -1,0 +1,32 @@
+.conteudo-produto{
+    display: flex;
+    padding-right: 10%;
+    padding-left: 10%;
+}
+.valor-compra{
+    display: flex;
+}
+button{
+    background-image: linear-gradient(to bottom right,#17171c, #6a6a70);
+}
+a{
+    text-decoration: none;
+    color: #fefeff;
+}
+input{
+    border-width:0px;
+    border:none;
+}
+:focus {
+    outline: none;
+}
+section{
+    border:solid 1px;
+    border-color: #83838f;
+    border-radius:10px;
+    box-shadow: 1px 1px 1px #131314;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}

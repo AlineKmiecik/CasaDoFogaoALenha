@@ -1,0 +1,22 @@
+
+<div class="conteudo-produto">
+    <hr>
+    <div class="imagem">
+        <img src="{{produto.img}}" alt="imagem produto" width="500px" height="500px">
+    </div>
+    <div class="propriedades-produto">
+        <br><h2>{{produto.nome}}
+            <br><h4>{{produto.marca}}</h4>
+        </h2>
+        <hr><h3>Descrição</h3>
+        {{produto.descricao}} <br>
+        <hr><br>
+        <div class="valor-compra">
+            <div><h2><b>Valor {{produto.valor | currency: "BRL"}}</b></h2></div>
+        </div>
+
+
+    </div>
+
+
+</div>

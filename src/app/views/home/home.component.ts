@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Produto } from 'src/app/models/Produto';
 
 @Component({
   selector: 'app-home',
@@ -11,6 +12,9 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
   }
+
+  
+
 
  
 

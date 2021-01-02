@@ -1,5 +1,5 @@
-import { Produto } from './../../models/Produto';
-import { ProdutosService } from './../../services/produtos.service';
+import { Produto } from '../../models/Produto';
+import { ProdutosService } from '../../services/produtos.service';
 import { Component, OnInit } from '@angular/core';
 
 
@@ -9,23 +9,45 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./fogoes-estufas.component.css']
 })
 export class FogoesEstufasComponent implements OnInit {
+
   
   Produtos: Produto[]; 
 
-  constructor(private produtosService: ProdutosService) { }
+  constructor(private produtosService: ProdutosService ) {
+
+  }
 
   ngOnInit(): void {
+
+    document.getElementById("FogoesEstufas").addEventListener("change", this.filtroProdutos);
+    document.getElementById("Chapas").addEventListener("change", this.filtroProdutos);
+    document.getElementById("Fornos").addEventListener("change", this.filtroProdutos);
+
   }
 
   getProdutos(){
- 
-    this.Produtos = this.produtosService.getFornos().concat(this.produtosService.getfogoes_estufas(), this.produtosService.getChapas());
+    this.produtosService.getProdutos().subscribe(dados => {this.Produtos = dados});
     return this.Produtos;
   }
 
   filtroProdutos(){
-    console.log("test");
+
+    var FogoesEstufas = document.getElementById("FogoesEstufas")  as HTMLInputElement;
+    var Chapas = document.getElementById("Chapas")  as HTMLInputElement;
+    var Fornos = document.getElementById("Fornos")  as HTMLInputElement;
+    
+    if(FogoesEstufas.checked == true){
+      console.log("FogoesEstufas marcado");
+    }
+    if(Chapas.checked == true){
+      console.log("Chapas marcado");
+    }
+    if(Fornos.checked == true){
+      console.log("Fornos marcado");
+    }
+    
   }
+
    testeBotao(){
      console.log("teste botao");
    }

@@ -2,18 +2,18 @@
     <mat-sidenav mode="side" opened fixedInViewport="false"
     fixedTopGap="50" fixedBottomGap="64">
       <mat-nav-list>
-        <div class="Filtro">
+        <div>
             <h2>Produtos</h2>
             <div>
-                <input type="checkbox" id="FogoesEstufas" name="FogoesEstufas" onchange="filtroProdutos()">
+                <input type="checkbox" id="FogoesEstufas" name="FogoesEstufas" >
                 <label for="FogoesEstufas">Fogões e estufas</label>
             </div><br>
             <div>
-                <input type="checkbox" id="Chapas" name="Chapas" onchange="filtroProdutos()">
+                <input type="checkbox" id="Chapas" name="Chapas" >
                 <label for="Chapas">Chapas</label>
             </div><br>
             <div>
-                <input type="checkbox" id="Fornos" name="Fornos" onchange="filtroProdutos()">
+                <input type="checkbox" id="Fornos" name="Fornos" >
                 <label for="Fornos">Fornos</label>
             </div>
             <br><button mat-raised-button onclick="testeBotao()">Filtrar</button>
@@ -25,10 +25,10 @@
     <mat-grid-list cols="3" rowHeight="270px">
         <mat-grid-tile  *ngFor="let produto of getProdutos()">
             <div >
-                <div class = "imagem">
-                    <img src={{produto.img}} width="150" height="150"><br>
+                <div>
+                    <a href="produtos/produto/{{produto.id}}"><img src={{produto.img}} width="150" height="150"></a><br>
                 </div>
-                <div class="conteudo-produto">
+                <div >
                     <h3 >{{produto.nome}} <br>
                     <b>{{produto.valor | currency: "BRL" }}</b>
                     </h3>

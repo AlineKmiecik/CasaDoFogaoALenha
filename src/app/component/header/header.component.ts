@@ -7,6 +7,7 @@ import { Component, OnInit, SecurityContext } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
 
+  QuantidadeCarrinho: number = 0;
 
   constructor() { }
 
