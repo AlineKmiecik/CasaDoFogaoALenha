@@ -8,9 +8,9 @@
             <button mat-button [matMenuTriggerFor]="testMenu" (mouseover)= "menuTrigger.openMenu()" #menuTrigger="matMenuTrigger" class="toolbar" >Produtos</button>
               <mat-menu #testMenu="matMenu">
                 <span (mouseleave)= "menuTrigger.closeMenu()">
-                    <button mat-menu-item><a class="menu" href="/produtos" > Fogões e estufas</a></button>
-                    <button mat-menu-item><a class="menu" href="/produtos" > Acessorios</a></button>
-                    <button mat-menu-item><a class="menu" href="/produtos" > Chapas</a></button>
+                    <button mat-menu-item><a class="menu" href="/produtos/fogoes" > Fogões</a></button>
+                    <button mat-menu-item><a class="menu" href="/produtos/fornos" > Fornos</a></button>
+                    <button mat-menu-item><a class="menu" href="/produtos/chapas" > Chapas</a></button>
                 </span>
               </mat-menu>   
         </mat-list-item>

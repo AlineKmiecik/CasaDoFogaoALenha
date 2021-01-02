@@ -19,11 +19,15 @@ const routes: Routes = [
     path: "produtos/produto/:id",
     component: ProdutoComponent
   },
-
+  {
+    path: "produtos/:filtro",
+    component: FogoesEstufasComponent
+  },
   {
     path: "contato",
     component: ContatoComponent
   }
+  
   
 
 ];

@@ -21,6 +21,7 @@ input{
 
 .nome-email{
     display: flex;
+    justify-content: space-evenly;
 }
 button{
     background-image: linear-gradient(to bottom right,#17171c, #6a6a70);    
@@ -29,4 +30,17 @@ button{
     display: flex;
     text-align: center;
 }
+.modal-conteudo{
+    padding-top: 5%;
+    padding-left: 10%;
+    padding-right: 10%;
+    padding-bottom: 5%;
+    
+}
+
+.confirmar-contato{
+    display: flex;
+    flex-direction: column;
+}
+
 

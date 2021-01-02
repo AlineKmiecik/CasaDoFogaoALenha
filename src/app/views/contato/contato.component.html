@@ -39,7 +39,7 @@
           
         </form>
 
-        <br><button mat-raised-button type="submit" (click)="openModal(template)"> Enviar mensagem</button>
+        <br><button mat-raised-button type="submit" onclick="document.getElementById('id01').style.display='block'" class="w3-button"> Enviar mensagem</button>
         
     </div>
 
@@ -52,11 +52,15 @@
     
 </div>
 
-<div class="modal pop-out">
-    <ng-template #template >
-        <div class="modal-body text-center">
-            <app-modal-contato [ContatoCliente]="ContatoCliente" (modalEvent)="closeModal($event)"></app-modal-contato>
-        
-        </div>
-    </ng-template>
-</div>
+
+
+<div id="id01" class="w3-modal">
+    <div class="w3-modal-content">
+      <div class="w3-container">
+        <span onclick="document.getElementById('id01').style.display='none'"
+        class="w3-button w3-display-topright">&times;</span>
+        <app-modal-contato [ContatoCliente]="ContatoCliente" (modalEvent)="closeModal($event)"></app-modal-contato>
+
+      </div>
+    </div>
+  </div>

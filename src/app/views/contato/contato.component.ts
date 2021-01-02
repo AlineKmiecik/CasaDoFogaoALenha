@@ -34,19 +34,16 @@ export class ContatoComponent implements OnInit {
     this.ContatoService.CadastrarContato(ContatoModal).subscribe();
     
   }
-  openModal(template: TemplateRef<any>) {
-    this.modalRef = this.modalService.show(this.template, this.config);
-  }
 
   closeModal(evento){
     console.log(evento.retorno);
     if(evento.retorno == "no"){
-      this.modalRef.hide();
+      document.getElementById('id01').style.display='none'
       this.ContatoCliente = new Contato();
     }else{
       console.log(evento.contato);
       this.CadastrarContato(evento.contato);
-      this.modalRef.hide();
+      document.getElementById('id01').style.display='none'
     }
   }
 

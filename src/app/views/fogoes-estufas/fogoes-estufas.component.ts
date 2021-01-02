@@ -1,6 +1,7 @@
 import { Produto } from '../../models/Produto';
 import { ProdutosService } from '../../services/produtos.service';
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 
 @Component({
@@ -10,14 +11,39 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FogoesEstufasComponent implements OnInit {
 
-  
-  Produtos: Produto[]; 
+  Produtos: Produto[] = [];
+  Produtos_generico: Produto[] = [];
 
-  constructor(private produtosService: ProdutosService ) {
+  constructor(private produtosService: ProdutosService, private route: ActivatedRoute ) {
 
   }
 
   ngOnInit(): void {
+    this.produtosService.getProdutos().subscribe(dados => {
+      this.Produtos = dados;
+      console.log(this.Produtos);
+    });
+    console.log(this.Produtos);
+    if(this.route.snapshot.paramMap.get("filtro")=="fogoes"){
+        console.log(this.Produtos);
+
+
+        this.Produtos.forEach(element => {
+          if(element.marca == "fogao"){
+            console.log("entrou");
+          }
+        });
+
+    }else if(this.route.snapshot.paramMap.get("filtro") == "chapas"){
+      console.log("Chapa");
+
+    }else if(this.route.snapshot.paramMap.get("filtro") == "fornos"){
+      console.log("Forno");
+      
+
+    }else{
+      this.Produtos_generico = this.Produtos;
+    }
 
     document.getElementById("FogoesEstufas").addEventListener("change", this.filtroProdutos);
     document.getElementById("Chapas").addEventListener("change", this.filtroProdutos);
@@ -26,8 +52,7 @@ export class FogoesEstufasComponent implements OnInit {
   }
 
   getProdutos(){
-    this.produtosService.getProdutos().subscribe(dados => {this.Produtos = dados});
-    return this.Produtos;
+    return this.Produtos_generico;
   }
 
   filtroProdutos(){
