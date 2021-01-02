@@ -1,3 +1,4 @@
+
 .conteudo{
     display: flex;
     padding-left: 15%;
@@ -47,6 +48,9 @@ input{
 
 #Mensagem{
     padding-bottom: 30%;
+}
+.modal{
+    text-align: center;
 }
 
 

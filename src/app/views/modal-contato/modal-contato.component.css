@@ -1,0 +1,32 @@
+section{
+    border:solid 1px;
+    border-color: #83838f;
+    border-radius:10px;
+    box-shadow: 1px 1px 1px #131314;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+::placeholder { 
+    color: #83838f;
+}
+input{
+    border-width:0px;
+    border:none;
+}
+:focus {
+    outline: none;
+}
+
+.nome-email{
+    display: flex;
+}
+button{
+    background-image: linear-gradient(to bottom right,#17171c, #6a6a70);    
+}
+.confirmar-contato{
+    display: flex;
+    text-align: center;
+}
+

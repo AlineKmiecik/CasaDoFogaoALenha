@@ -1,8 +1,8 @@
 import { ContatoService } from './../../services/contato.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { Contato } from 'src/app/models/Contato';
-import { MatDialog } from '@angular/material/dialog';
-import { ModalContatoComponent } from '../modal-contato/modal-contato.component';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+
 
 
 @Component({
@@ -12,9 +12,16 @@ import { ModalContatoComponent } from '../modal-contato/modal-contato.component'
 })
 export class ContatoComponent implements OnInit {
 
-  ContatoCliente : Contato = new Contato();
 
-  constructor(private ContatoService: ContatoService, public dialog: MatDialog) {
+  @Input() ContatoCliente : Contato = new Contato();
+
+   modalRef: BsModalRef;
+  config = {
+    animated: true
+  };
+  @ViewChild('template') template;
+
+  constructor(private ContatoService: ContatoService, private modalService: BsModalService) {
     
   }
 
@@ -22,16 +29,28 @@ export class ContatoComponent implements OnInit {
 
   }
 
-  CadastrarContato(){
-    let contatoAux: Contato = this.ContatoCliente;
+  CadastrarContato(ContatoModal: Contato){
     this.ContatoCliente = new Contato();
-    this.ContatoService.CadastrarContato(contatoAux).subscribe();
+    this.ContatoService.CadastrarContato(ContatoModal).subscribe();
     
   }
+  openModal(template: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(this.template, this.config);
+  }
 
-  openModal() {
-    this.dialog.open(ModalContatoComponent);
- }
+  closeModal(evento){
+    console.log(evento.retorno);
+    if(evento.retorno == "no"){
+      this.modalRef.hide();
+      this.ContatoCliente = new Contato();
+    }else{
+      console.log(evento.contato);
+      this.CadastrarContato(evento.contato);
+      this.modalRef.hide();
+    }
+  }
+
+
 
   
 

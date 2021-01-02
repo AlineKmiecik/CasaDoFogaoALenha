@@ -39,7 +39,7 @@
           
         </form>
 
-        <br><button mat-raised-button type="submit" (click)="openModal()"> Enviar mensagem</button>
+        <br><button mat-raised-button type="submit" (click)="openModal(template)"> Enviar mensagem</button>
         
     </div>
 
@@ -50,4 +50,13 @@
     </div>
 
     
+</div>
+
+<div class="modal pop-out">
+    <ng-template #template >
+        <div class="modal-body text-center">
+            <app-modal-contato [ContatoCliente]="ContatoCliente" (modalEvent)="closeModal($event)"></app-modal-contato>
+        
+        </div>
+    </ng-template>
 </div>

@@ -28,6 +28,8 @@ import { ModalContatoComponent } from './views/modal-contato/modal-contato.compo
 import {MatDialogModule} from '@angular/material/dialog';
 
 
+import { ModalModule } from 'ngx-bootstrap/modal';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -56,7 +58,8 @@ import {MatDialogModule} from '@angular/material/dialog';
     BrowserAnimationsModule,
     MatPaginatorModule,
     HttpClientModule,
-    MatDialogModule
+    MatDialogModule,
+    ModalModule.forRoot()
 
   ],
   providers: [],
