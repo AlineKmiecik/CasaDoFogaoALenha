@@ -13,6 +13,12 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  zerarCache(){
+    window.localStorage.setItem('Fornos', "false");
+    window.localStorage.setItem('Chapas', "false");
+    window.localStorage.setItem('Fogoes', "false");
+  }
+
   
 
 

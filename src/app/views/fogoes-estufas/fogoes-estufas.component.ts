@@ -12,7 +12,6 @@ import { ActivatedRoute } from '@angular/router';
 export class FogoesEstufasComponent implements OnInit {
 
   Produtos: Produto[] = [];
-  Produtos_generico: Produto[] = [];
 
   constructor(private produtosService: ProdutosService, private route: ActivatedRoute ) {
 
@@ -20,62 +19,138 @@ export class FogoesEstufasComponent implements OnInit {
 
   ngOnInit(): void {
     this.produtosService.getProdutos().subscribe(dados => {
-      this.Produtos = dados;
-      console.log(this.Produtos);
-    });
-    console.log(this.Produtos);
-    if(this.route.snapshot.paramMap.get("filtro")=="fogoes"){
-        console.log(this.Produtos);
+      if(this.route.snapshot.paramMap.get("filtro")=="fogoes"){
 
-
-        this.Produtos.forEach(element => {
+        dados.forEach(element => {
           if(element.marca == "fogao"){
-            console.log("entrou");
+            this.Produtos.push(element);
           }
         });
+        let Fogoes = document.getElementById("Fogoes")  as HTMLInputElement;
+            Fogoes.checked = true;
+            //settando valor do cache
+            this.zerarCache();
+            window.localStorage.setItem('Fogoes', "true");
 
-    }else if(this.route.snapshot.paramMap.get("filtro") == "chapas"){
-      console.log("Chapa");
-
-    }else if(this.route.snapshot.paramMap.get("filtro") == "fornos"){
-      console.log("Forno");
+  
+      }else if(this.route.snapshot.paramMap.get("filtro") == "chapas"){
+        
+        dados.forEach(element => {
+          if(element.marca == "Chapa"){
+            this.Produtos.push(element);
+          }
+        });
+        let Chapas = document.getElementById("Chapas")  as HTMLInputElement;
+            Chapas.checked = true;
+            this.zerarCache();
+            window.localStorage.setItem('Chapas', "true");
+  
+      }else if(this.route.snapshot.paramMap.get("filtro") == "fornos"){
       
+        dados.forEach(element => {
+          if(element.marca == "Forno"){
+            this.Produtos.push(element);
+          }
+        });
+        let Fornos = document.getElementById("Fornos")  as HTMLInputElement;
+            Fornos.checked = true;
+            this.zerarCache();
+            window.localStorage.setItem('Fornos', "true");
+            
+      
+  
+      }else{
+        //verifica se há valores em cache
+        
+        let ProdutosAux: Produto[] =[];
+        let cacheAux: boolean = false;
+        if(window.localStorage.getItem('Fogoes') == "true"){
+          cacheAux = true;
+          dados.forEach(element => {
+            if(element.marca == "fogao"){
+              ProdutosAux.push(element);
+            }
+          });
 
-    }else{
-      this.Produtos_generico = this.Produtos;
-    }
+          let Fogoes = document.getElementById("Fogoes")  as HTMLInputElement;
+          Fogoes.checked = true;
 
-    document.getElementById("FogoesEstufas").addEventListener("change", this.filtroProdutos);
+        }
+        if(window.localStorage.getItem('Chapas') == "true"){
+          cacheAux = true;
+          dados.forEach(element => {
+            if(element.marca == "Chapa"){
+              ProdutosAux.push(element);
+            }
+          });
+
+          let Chapas = document.getElementById("Chapas")  as HTMLInputElement;
+            Chapas.checked = true;
+        }
+        if(window.localStorage.getItem('Fornos') == "true"){
+          cacheAux = true;
+          dados.forEach(element => {
+            if(element.marca == "Forno"){
+              ProdutosAux.push(element);
+            }
+          });
+
+          let Fornos = document.getElementById("Fornos")  as HTMLInputElement;
+            Fornos.checked = true;
+        }
+        if(!cacheAux){
+          this.Produtos = dados;
+        }else{
+          this.Produtos = ProdutosAux;
+        }
+      }
+      
+    });
+    
+    document.getElementById("Fogoes").addEventListener("change", this.filtroProdutos);
     document.getElementById("Chapas").addEventListener("change", this.filtroProdutos);
     document.getElementById("Fornos").addEventListener("change", this.filtroProdutos);
-
   }
 
   getProdutos(){
-    return this.Produtos_generico;
+    return this.Produtos;
   }
 
   filtroProdutos(){
 
-    var FogoesEstufas = document.getElementById("FogoesEstufas")  as HTMLInputElement;
-    var Chapas = document.getElementById("Chapas")  as HTMLInputElement;
-    var Fornos = document.getElementById("Fornos")  as HTMLInputElement;
+    let Fogoes = document.getElementById("Fogoes")  as HTMLInputElement;
+    let Chapas = document.getElementById("Chapas")  as HTMLInputElement;
+    let Fornos = document.getElementById("Fornos")  as HTMLInputElement;
     
-    if(FogoesEstufas.checked == true){
-      console.log("FogoesEstufas marcado");
+    if(Fogoes.checked == true){
+      window.localStorage.setItem('Fogoes', "true");
+    }else{
+      window.localStorage.setItem('Fogoes', "false");
     }
     if(Chapas.checked == true){
-      console.log("Chapas marcado");
+      window.localStorage.setItem('Chapas', "true");
+    }else{
+      window.localStorage.setItem('Chapas', "false");
     }
     if(Fornos.checked == true){
-      console.log("Fornos marcado");
+      window.localStorage.setItem('Fornos', "true");
+    }else{
+      window.localStorage.setItem('Fornos', "false");
     }
+
+    window.location.href = "http://localhost:4200/produtos";
     
   }
 
-   testeBotao(){
+  testeBotao(){
      console.log("teste botao");
-   }
+  }
+
+  zerarCache(){
+    window.localStorage.setItem('Fornos', "false");
+    window.localStorage.setItem('Chapas', "false");
+    window.localStorage.setItem('Fogoes', "false");
+  }
 
   
 
