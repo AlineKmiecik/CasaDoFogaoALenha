@@ -2,6 +2,7 @@ import { Produto } from '../../models/Produto';
 import { ProdutosService } from '../../services/produtos.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -12,13 +13,14 @@ import { ActivatedRoute } from '@angular/router';
 export class FogoesEstufasComponent implements OnInit {
 
   Produtos: Produto[] = [];
+  inscricaoObservable: Subscription; 
 
   constructor(private produtosService: ProdutosService, private route: ActivatedRoute ) {
 
   }
 
   ngOnInit(): void {
-    this.produtosService.getProdutos().subscribe(dados => {
+    this.inscricaoObservable = this.produtosService.getProdutos().subscribe(dados => {
       if(this.route.snapshot.paramMap.get("filtro")=="fogoes"){
 
         dados.forEach(element => {
@@ -103,9 +105,11 @@ export class FogoesEstufasComponent implements OnInit {
         }else{
           this.Produtos = ProdutosAux;
         }
-      }
-      
-    });
+      }  
+    },
+    err => console.log('HTTP Error', err)
+    
+    );
     
     document.getElementById("Fogoes").addEventListener("change", this.filtroProdutos);
     document.getElementById("Chapas").addEventListener("change", this.filtroProdutos);
@@ -150,6 +154,11 @@ export class FogoesEstufasComponent implements OnInit {
     window.localStorage.setItem('Fornos', "false");
     window.localStorage.setItem('Chapas', "false");
     window.localStorage.setItem('Fogoes', "false");
+  }
+
+  NgOnDestroy(){
+    this.inscricaoObservable.unsubscribe();
+    
   }
 
   
