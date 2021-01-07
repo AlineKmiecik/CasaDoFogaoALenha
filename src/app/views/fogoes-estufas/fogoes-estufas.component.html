@@ -1,31 +1,32 @@
+
 <mat-sidenav-container>
     <mat-sidenav mode="side" opened fixedInViewport="false"
     fixedTopGap="50" fixedBottomGap="64">
       <mat-nav-list>
-        <div>
+        <form [formGroup]="FiltragemProdutos">
             <h2>Produtos</h2>
             <div>
-                <input type="checkbox" id="Fogoes" name="Fogoes" >
+                <input type="checkbox" formControlName="Fogoes" >
                 <label for="FogoesEstufas">Fogões</label>
             </div><br>
             <div>
-                <input type="checkbox" id="Chapas" name="Chapas" >
+                <input type="checkbox" formControlName="Chapas" >
                 <label for="Chapas">Chapas</label>
             </div><br>
             <div>
-                <input type="checkbox" id="Fornos" name="Fornos" >
+                <input type="checkbox"  formControlName="Fornos" >
                 <label for="Fornos">Fornos</label>
             </div>
-        </div>
+        </form>
 
       </mat-nav-list>
     </mat-sidenav>
     
     <mat-grid-list cols="3" rowHeight="270px">
-        <mat-grid-tile  *ngFor="let produto of getProdutos()">
+        <mat-grid-tile  *ngFor="let produto of Produtos">
             <div >
                 <div>
-                    <a href="produtos/produto/{{produto.id}}"><img src={{produto.img}} width="150" height="150"></a><br>
+                    <a href="produtos/produto/{{produto.id}}"><img src={{produto.img}} width="150" height="150"></a>
                 </div>
                 <div >
                     <h3 >{{produto.nome}} <br>

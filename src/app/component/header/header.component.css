@@ -20,7 +20,9 @@ mat-toolbar {
     color: #f1f1f4 ;
 }
 
-
+.produto-buscado{
+    display: flex;
+}
 
 mat-list{
     display: flex;

@@ -1,0 +1,20 @@
+<div class="Comentarios">
+    <br><hr><br>
+    <div *ngIf ="Comentarios.length > 0">
+        <h1>Comentários</h1>
+        <section class="favoritos-comentario" *ngFor = "let comentario of Comentarios" >
+            <div>
+                <h3>Nome: {{comentario.Nome}}</h3>
+                <h5>Comentario: {{comentario.Comentario}}</h5>
+                <hr>
+            </div> 
+            <div>
+                <button type="submit" (click)="SubjectMethod(comentario)"><mat-icon aria-hidden="false" aria-label="Example home icon">stars</mat-icon><br>Favoritar</button>
+            </div>
+        </section>
+    </div>
+
+    <div *ngIf ="! (Comentarios.length > 0)">
+        <h2>Esse produto não possui comentários</h2>
+    </div>
+</div>

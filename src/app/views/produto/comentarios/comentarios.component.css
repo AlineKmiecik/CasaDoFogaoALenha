@@ -1,0 +1,15 @@
+.Comentarios{
+    padding-right: 20%;
+    padding-left: 20%;
+}
+
+.favoritos-comentario{
+    display: flex;
+
+}
+.favorito{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+

@@ -1,6 +1,7 @@
+import { FormGroup, FormBuilder } from '@angular/forms';
 import { Produto } from '../../models/Produto';
 import { ProdutosService } from '../../services/produtos.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 
@@ -13,107 +14,57 @@ import { Subscription } from 'rxjs';
 export class FogoesEstufasComponent implements OnInit {
 
   Produtos: Produto[] = [];
-  inscricaoObservable: Subscription; 
+  InscricaoSubscribe: Subscription; 
 
-  constructor(private produtosService: ProdutosService, private route: ActivatedRoute ) {
+  FiltragemProdutos: FormGroup;
+  CategoriasProdutos: string[] = [];
+
+  FogoesCheckbox:boolean = false;
+  FornosCheckbox:boolean = false;
+  ChapasCheckBox:boolean = false;
+
+  constructor(private produtosService: ProdutosService, private route: ActivatedRoute, private FormBuilder: FormBuilder ) {
 
   }
 
   ngOnInit(): void {
-    this.inscricaoObservable = this.produtosService.getProdutos().subscribe(dados => {
-      if(this.route.snapshot.paramMap.get("filtro")=="fogoes"){
+    if(this.route.snapshot.paramMap.get("filtro") != null){
+      this.CategoriasProdutos.push(this.route.snapshot.paramMap.get("filtro"));
+      this.InscricaoSubscribe =this.InscricaoSubscribe = this.produtosService.getProdutosCategoria(this.CategoriasProdutos).subscribe(dados=>{this.Produtos = this.Produtos.concat(dados);});
+    }else{
+      let ValidaSeHaLocalStorage: boolean = false;
 
-        dados.forEach(element => {
-          if(element.marca == "fogao"){
-            this.Produtos.push(element);
-          }
-        });
-        let Fogoes = document.getElementById("Fogoes")  as HTMLInputElement;
-            Fogoes.checked = true;
-            //settando valor do cache
-            this.zerarCache();
-            window.localStorage.setItem('Fogoes', "true");
+      if(window.localStorage.getItem('fogoes') == "true"){
+        ValidaSeHaLocalStorage = true;
+        this.CategoriasProdutos.push("fogoes");
+      }
+      if(window.localStorage.getItem('chapas') == "true"){
+        ValidaSeHaLocalStorage = true;
+        this.CategoriasProdutos.push("chapas");
+      }
+      if(window.localStorage.getItem('fornos') == "true"){
+        ValidaSeHaLocalStorage = true;
+        this.CategoriasProdutos.push("fornos");
+      }
 
-  
-      }else if(this.route.snapshot.paramMap.get("filtro") == "chapas"){
-        
-        dados.forEach(element => {
-          if(element.marca == "Chapa"){
-            this.Produtos.push(element);
-          }
-        });
-        let Chapas = document.getElementById("Chapas")  as HTMLInputElement;
-            Chapas.checked = true;
-            this.zerarCache();
-            window.localStorage.setItem('Chapas', "true");
-  
-      }else if(this.route.snapshot.paramMap.get("filtro") == "fornos"){
-      
-        dados.forEach(element => {
-          if(element.marca == "Forno"){
-            this.Produtos.push(element);
-          }
-        });
-        let Fornos = document.getElementById("Fornos")  as HTMLInputElement;
-            Fornos.checked = true;
-            this.zerarCache();
-            window.localStorage.setItem('Fornos', "true");
-            
-      
-  
-      }else{
-        //verifica se há valores em cache
-        
-        let ProdutosAux: Produto[] =[];
-        let cacheAux: boolean = false;
-        if(window.localStorage.getItem('Fogoes') == "true"){
-          cacheAux = true;
-          dados.forEach(element => {
-            if(element.marca == "fogao"){
-              ProdutosAux.push(element);
-            }
-          });
-
-          let Fogoes = document.getElementById("Fogoes")  as HTMLInputElement;
-          Fogoes.checked = true;
-
-        }
-        if(window.localStorage.getItem('Chapas') == "true"){
-          cacheAux = true;
-          dados.forEach(element => {
-            if(element.marca == "Chapa"){
-              ProdutosAux.push(element);
-            }
-          });
-
-          let Chapas = document.getElementById("Chapas")  as HTMLInputElement;
-            Chapas.checked = true;
-        }
-        if(window.localStorage.getItem('Fornos') == "true"){
-          cacheAux = true;
-          dados.forEach(element => {
-            if(element.marca == "Forno"){
-              ProdutosAux.push(element);
-            }
-          });
-
-          let Fornos = document.getElementById("Fornos")  as HTMLInputElement;
-            Fornos.checked = true;
-        }
-        if(!cacheAux){
+      if(ValidaSeHaLocalStorage){
+        this.InscricaoSubscribe = this.produtosService.getProdutosCategoria(this.CategoriasProdutos).subscribe(dados =>{
           this.Produtos = dados;
-        }else{
-          this.Produtos = ProdutosAux;
-        }
-      }  
-    },
-    err => console.log('HTTP Error', err)
-    
-    );
-    
-    document.getElementById("Fogoes").addEventListener("change", this.filtroProdutos);
-    document.getElementById("Chapas").addEventListener("change", this.filtroProdutos);
-    document.getElementById("Fornos").addEventListener("change", this.filtroProdutos);
+        });
+      }else{
+       this.InscricaoSubscribe = this.InscricaoSubscribe = this.produtosService.getProdutos().subscribe(dados => {this.Produtos=dados});
+      } 
+    }
+    this.setCheckBoxCacheStatus();
+
+    this.FiltragemProdutos = this.FormBuilder.group({
+      Fogoes: [this.FogoesCheckbox],
+      Chapas: [this.ChapasCheckBox],
+      Fornos: [this.FornosCheckbox]
+    });
+
+    this.filtroProdutos();
+  
   }
 
   getProdutos(){
@@ -121,43 +72,52 @@ export class FogoesEstufasComponent implements OnInit {
   }
 
   filtroProdutos(){
-
-    let Fogoes = document.getElementById("Fogoes")  as HTMLInputElement;
-    let Chapas = document.getElementById("Chapas")  as HTMLInputElement;
-    let Fornos = document.getElementById("Fornos")  as HTMLInputElement;
+    this.FiltragemProdutos.valueChanges.subscribe(StatusCheckbox =>{
+      if(StatusCheckbox.Fogoes == true){
+        window.localStorage.setItem('fogoes', "true");
+      }else{
+        window.localStorage.setItem('fogoes', "false");
+      }
+      if(StatusCheckbox.Chapas == true){
+        window.localStorage.setItem('chapas', "true");
+      }else{
+        window.localStorage.setItem('chapas', "false");
+      }
+      if(StatusCheckbox.Fornos == true){
+        window.localStorage.setItem('fornos', "true");
+      }else{
+        window.localStorage.setItem('fornos', "false");
+      }
+      window.location.href = "http://localhost:4200/produtos";
+    });
     
-    if(Fogoes.checked == true){
-      window.localStorage.setItem('Fogoes', "true");
-    }else{
-      window.localStorage.setItem('Fogoes', "false");
-    }
-    if(Chapas.checked == true){
-      window.localStorage.setItem('Chapas', "true");
-    }else{
-      window.localStorage.setItem('Chapas', "false");
-    }
-    if(Fornos.checked == true){
-      window.localStorage.setItem('Fornos', "true");
-    }else{
-      window.localStorage.setItem('Fornos', "false");
-    }
-
-    window.location.href = "http://localhost:4200/produtos";
     
   }
 
-  testeBotao(){
-     console.log("teste botao");
+  setCheckBoxCacheStatus(){
+    this.zerarCache();
+    this.CategoriasProdutos.forEach(categoria => {
+      if(categoria=="fornos"){
+        window.localStorage.setItem('fornos', "true");
+        this.FornosCheckbox = true;
+      }else if(categoria=="chapas"){
+        window.localStorage.setItem('chapas', "true");
+        this.ChapasCheckBox=true;
+      }else if(categoria=="fogoes"){
+        window.localStorage.setItem('fogoes', "true");
+        this.FogoesCheckbox=true;
+      }
+    });
   }
 
   zerarCache(){
-    window.localStorage.setItem('Fornos', "false");
-    window.localStorage.setItem('Chapas', "false");
-    window.localStorage.setItem('Fogoes', "false");
+    window.localStorage.setItem('fornos', "false");
+    window.localStorage.setItem('chapas', "false");
+    window.localStorage.setItem('fogoes', "false");
   }
 
-  NgOnDestroy(){
-    this.inscricaoObservable.unsubscribe();
+  ngOnDestroy(){
+    this.InscricaoSubscribe.unsubscribe();
     
   }
 

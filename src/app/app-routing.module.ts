@@ -1,19 +1,25 @@
-import { FogoesEstufasComponent } from './views/fogoes-estufas/fogoes-estufas.component';
-import { ProdutoComponent } from './views/produto/produto.component';
+//import { FogoesEstufasComponent } from './views/fogoes-estufas/fogoes-estufas.component';
+//import { ProdutoComponent } from './views/produto/produto.component';
 import { ContatoComponent } from './views/contato/contato.component';
 
 import { HomeComponent } from './views/home/home.component';
-import { NgModule, Component } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
+
+//
+
 const routes: Routes = [
-  {
-    path: "",
-    component: HomeComponent
+
+  {path: "produtos" , loadChildren: () => import('src/app/views/fogoes-estufas/produtos.module').then(m => m.ProdutosModule) 
+  //loadChildren: 'src/app/views/fogoes-estufas/produtos.module.ts#ProdutosModule'
   },
+
+  {path: "", component: HomeComponent},
+  {path: "contato",component: ContatoComponent}
+  /*
   {
-    path: "produtos",
-    component: FogoesEstufasComponent
+    path: "produtos",component: FogoesEstufasComponent
   },
   {
     path: "produtos/produto/:id",
@@ -23,15 +29,8 @@ const routes: Routes = [
     path: "produtos/:filtro",
     component: FogoesEstufasComponent
   },
-  {
-    path: "contato",
-    component: ContatoComponent
-  },
-  {
-    path: '**',
-    component: HomeComponent
-  }
-
+  */
+ 
   
   
 

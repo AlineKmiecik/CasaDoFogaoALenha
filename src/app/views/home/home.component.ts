@@ -14,9 +14,9 @@ export class HomeComponent implements OnInit {
   }
 
   zerarCache(){
-    window.localStorage.setItem('Fornos', "false");
-    window.localStorage.setItem('Chapas', "false");
-    window.localStorage.setItem('Fogoes', "false");
+    window.localStorage.setItem('fornos', "false");
+    window.localStorage.setItem('chapas', "false");
+    window.localStorage.setItem('fogoes', "false");
   }
 
   
